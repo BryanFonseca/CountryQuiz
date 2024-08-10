@@ -30,15 +30,24 @@ const QUESTIONS_MODEL = [
         // 1. A qué país pertenece esta bandera?
         // Seleccionar una bandera al azar y el país al que pertenece
         // Seleccionar tres otros países n espacios más adelante (considerar usar módulo)
-        const getRandomCountry = () => getRandomItem(countries);
-        const randomCountry = getRandomCountry();
+        // const getRandomCountry = () => getRandomItem(countries);
+		const randomIndex = randomBetween(countries.length - 1);
+        const randomCountry = countries[randomIndex];
         const flag = randomCountry.flag;
+		// Select a random item that's between the current element and n elements ahead
+		// const random1Index = (randomIndex + randomBetween(5, 1)) % countries.length;
+		// const random2Index = (random1Index + randomBetween(5, 1)) % countries.length;
+		// const random3Index = (random2Index + randomBetween(5, 1)) % countries.length;
+		const random1Index = (randomIndex + randomBetween(Math.floor((countries.length - 2) / 5))) % countries.length;
+		const random2Index = (random1Index + randomBetween(Math.floor((countries.length - 2) / 5))) % countries.length;
+		const random3Index = (random2Index + randomBetween(Math.floor((countries.length - 2) / 5))) % countries.length;
         const options = [
             randomCountry,
-            getRandomCountry(),
-            getRandomCountry(),
-            getRandomCountry(),
+			countries[random1Index],
+			countries[random2Index],
+			countries[random3Index],
         ];
+
         return {
             question: `Which country does this flag ${flag} belong to?`,
             options: shuffle(
@@ -58,15 +67,31 @@ const QUESTIONS_MODEL = [
         const countriesWithCapital = countries.filter(
             (country) => !!country.capital && !!country.capital[0]
         );
-        const getRandomCountry = () => getRandomItem(countriesWithCapital);
-        const randomCountry = getRandomCountry();
+
+
+		const randomIndex = randomBetween(countriesWithCapital.length - 1);
+        const randomCountry = countriesWithCapital[randomIndex];
         const [capital] = randomCountry.capital;
+		// Select a random item that's between the current element and n elements ahead
+		const random1Index = (randomIndex + randomBetween(Math.floor((countriesWithCapital.length - 2) / 5))) % countriesWithCapital.length;
+		const random2Index = (random1Index + randomBetween(Math.floor((countriesWithCapital.length - 2) / 5))) % countriesWithCapital.length;
+		const random3Index = (random2Index + randomBetween(Math.floor((countriesWithCapital.length - 2) / 5))) % countriesWithCapital.length;
         const options = [
             randomCountry,
-            getRandomCountry(),
-            getRandomCountry(),
-            getRandomCountry(),
+			countriesWithCapital[random1Index],
+			countriesWithCapital[random2Index],
+			countriesWithCapital[random3Index],
         ];
+
+        // const getRandomCountry = () => getRandomItem(countriesWithCapital);
+        // const randomCountry = getRandomCountry();
+        // const [capital] = randomCountry.capital;
+        // const options = [
+        //     randomCountry,
+        //     getRandomCountry(),
+        //     getRandomCountry(),
+        //     getRandomCountry(),
+        // ];
         return {
             question: `Which country is ${capital} the capital?`,
             options: shuffle(
